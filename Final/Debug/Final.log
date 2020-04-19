@@ -1,0 +1,8 @@
+﻿  image.cc
+  snake.cc
+E:\BACHELOR-3\COMPUTER-GRAPHICS\Snake\snake.cc(54,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\BACHELOR-3\COMPUTER-GRAPHICS\Snake\snake.cc(55,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+E:\BACHELOR-3\COMPUTER-GRAPHICS\Snake\snake.cc(73,19): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+E:\BACHELOR-3\COMPUTER-GRAPHICS\Snake\snake.cc(77,19): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  Final.vcxproj -> E:\BACHELOR-3\COMPUTER-GRAPHICS\Final\Debug\Final.exe
