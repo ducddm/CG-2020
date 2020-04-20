@@ -1,13 +1,11 @@
 #include <stdlib.h>
 
-/*#ifdef __APPLE__
+#ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
 #include <glut.h>
 #endif
-*/
 
-#include <GLUT/glut.h>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -16,8 +14,8 @@
 #include <math.h>
 #include <time.h>
 
-#include "../image.h"
-#include "../snake.h"
+#include "image.h"
+#include "snake.h"
 
 Snake* player;
 
@@ -55,7 +53,7 @@ double speed = 1.0;
 
 
 int dirX = 1;
-int dirY = 0;
+int dirY = 0; 
 
 
 bool showMap = false;
@@ -89,7 +87,7 @@ int crece = 0;
 
 
 void loadTexture(Image* image, int k) {
-    glBindTexture(GL_TEXTURE_2D, texName[k]);
+    glBindTexture(GL_TEXTURE_2D, texName[k]); 
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -100,15 +98,15 @@ void loadTexture(Image* image, int k) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    glTexImage2D(GL_TEXTURE_2D,
-        0,
-        GL_RGB,
-        image->width, image->height,
-        0,
-        GL_RGB,
-        GL_UNSIGNED_BYTE,
-
-        image->pixels);
+    glTexImage2D(GL_TEXTURE_2D,               
+        0,                           
+        GL_RGB,                      
+        image->width, image->height, 
+        0,                          
+        GL_RGB,                      
+        GL_UNSIGNED_BYTE,            
+                                    
+        image->pixels);              
 }
 
 
@@ -117,7 +115,7 @@ Image* loadBMP(const char* filename);
 void onMenu(int opcion) {
     switch (opcion) {
 
-
+        
     case SPEED1:
         speed = 1.0;
         break;
@@ -128,7 +126,7 @@ void onMenu(int opcion) {
         speed = 3.0;
         break;
 
-
+        
     case PERSP1:
         showMap = false;
         break;
@@ -136,7 +134,7 @@ void onMenu(int opcion) {
         showMap = true;
         break;
 
-
+       
     case SNAKE1:
         snakeShape = 0;
         break;
@@ -144,13 +142,39 @@ void onMenu(int opcion) {
         snakeShape = 1;
         break;
 
-
+        
     case SALIR:
         exit(0);
         break;
     }
     glutPostRedisplay();
 }
+
+void initMenu(void) {
+    int menuVelocidad, menuPerspectiva, menuSerpiente, menuPrincipal;
+
+    menuVelocidad = glutCreateMenu(onMenu);
+    glutAddMenuEntry("Principiante", SPEED1);
+    glutAddMenuEntry("Intermedio", SPEED2);
+    glutAddMenuEntry("Avanzado", SPEED3);
+
+    menuPerspectiva = glutCreateMenu(onMenu);
+    glutAddMenuEntry("3D", PERSP1);
+    glutAddMenuEntry("2D", PERSP2);
+
+    menuSerpiente = glutCreateMenu(onMenu);
+    glutAddMenuEntry("Esférica", SNAKE1);
+    glutAddMenuEntry("Cubica", SNAKE2);
+
+    menuPrincipal = glutCreateMenu(onMenu);
+    glutAddSubMenu("Nivel", menuVelocidad);
+    glutAddSubMenu("Perspectiva (2D/3D)", menuPerspectiva);
+    glutAddSubMenu("Serpiente", menuSerpiente);
+    glutAddMenuEntry("Salir", SALIR);
+
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
 
 
 static void init() {
@@ -161,26 +185,26 @@ static void init() {
     glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_FLAT);
 
-    player = new Snake(unitsPerRow / 2, unitsPerCol / 2, 100);
+    player = new Snake(unitsPerRow / 2, unitsPerCol / 2, 100);            
 
 
     srand((int)time(NULL));
 
-
+    
     appleX = rand() % unitsPerRow + 1;
     appleY = rand() % unitsPerCol + 1;
 
-
+   
     initMenu();
 
-
+    
     glGenTextures(2, texName);
     Image* image;
 
-    image = loadBMP("E:/BACHELOR-3/COMPUTER-GRAPHICS/Snake/snake.bmp");
+    image = loadBMP("C:/Users/Thanh Tung/Desktop/Project3/snake.bmp");
     loadTexture(image, 0);
 
-    image = loadBMP("E:/BACHELOR-3/COMPUTER-GRAPHICS/Snake/apple.bmp");
+    image = loadBMP("C:/Users/Thanh Tung/Desktop/Project3//apple.bmp");
     loadTexture(image, 1);
 
     delete image;
@@ -232,7 +256,7 @@ void drawSplashScreen() {
     glColor3f(0.0, 225, 225);
     glLineWidth(1);
 
-    std::stringstream ss;
+    std::stringstream ss; 
 
     //Co viet them gi o man hinh thi viet o day nhe
 
@@ -268,7 +292,7 @@ static void drawMap(void) {
     glDisable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
+    
     glColor3f(0.0, 225, 225);
     glLineWidth(1);
 
@@ -283,7 +307,7 @@ static void drawMap(void) {
 
     glEnd();
 
-
+    
     glColor3f(1.0, 0.0, 0.0);
     glLineWidth(3);
 
@@ -296,7 +320,7 @@ static void drawMap(void) {
 
     glLineWidth(1);
 
-
+    
     glColor3f(1.0, 0.0, 0.0);
     glPointSize(6);
 
@@ -306,7 +330,7 @@ static void drawMap(void) {
 
     glPointSize(1);
 
-
+   
     glColor3f(1.0, 1.0, 0.0);
     glLineWidth(unitSize);
 
@@ -318,10 +342,10 @@ static void drawMap(void) {
 
     glLineWidth(1);
 
-
+   
     glColor3f(1.0, 1.0, 1.0);
 
-    std::stringstream ss;
+    std::stringstream ss; 
     ss << "Score: " << std::to_string(score);
     drawString(GLUT_BITMAP_9_BY_15, ss.str().c_str(), -0.85, -0.85);
 }
@@ -341,7 +365,7 @@ static void drawPerspective(void) {
     glLightfv(GL_LIGHT0, GL_DIFFUSE, directedLight);
     glLightfv(GL_LIGHT0, GL_POSITION, directedLightPos);
 
-
+   
     glColor3f(0, 225, 225);
     glLineWidth(1);
 
@@ -356,7 +380,7 @@ static void drawPerspective(void) {
 
     glEnd();
 
-
+   
     glColor3f(0.6, 0.0, 0.6);
 
     glPushMatrix();
@@ -385,7 +409,7 @@ static void drawPerspective(void) {
 
     glEnable(GL_TEXTURE_2D);
 
-
+    
     glColor3f(1.5, 0.0, 0.0);
 
     glEnable(GL_TEXTURE_GEN_S);
@@ -402,7 +426,7 @@ static void drawPerspective(void) {
     glutSolidCube(0.05);
     glPopMatrix();
 
-
+    
     glColor3f(0.8, 1.0, 0.0);
 
     glBindTexture(GL_TEXTURE_2D, texName[0]);
@@ -425,10 +449,10 @@ static void drawPerspective(void) {
     glDisable(GL_TEXTURE_GEN_T);
     glDisable(GL_TEXTURE_2D);
 
-
+   
     glColor3f(1.0, 1.0, 1.0);
 
-    std::stringstream ss;
+    std::stringstream ss; 
     ss << "Score: " << std::to_string(score);
     draw3dString(GLUT_STROKE_MONO_ROMAN, ss.str().c_str(), -0.85, -0.85, 0.0);
 }
@@ -508,7 +532,7 @@ void myTimer(int valor) {
         return;
     }
 
-
+   
     if (dirX == 1 && player->x() >= unitsPerRow) {
         dirX = 0;
         dirY = 1;
@@ -531,10 +555,10 @@ void myTimer(int valor) {
 
     appleAngle = (appleAngle >= 360) ? 0 : appleAngle + 5;
 
-
+  
     if (crece == 1 || snakeHits(appleX, appleY)) {
 
-
+        
         score += (1 * scoreMultiplier * speed);
 
         if (!player->full()) {
@@ -542,13 +566,13 @@ void myTimer(int valor) {
         }
         else {
 
-
+            
             resetGame();
 
-
+            
             scoreMultiplier++;
 
-
+           
             timerTick *= timerMultiplier;
         }
 
@@ -571,9 +595,9 @@ void myTimer(int valor) {
 }
 
 void myKeyboard(unsigned char theKey, int mouseX, int mouseY) {
-
+   
     switch (theKey) {
-
+        
     case 'w': case 'W':
         if (dirY != -1) { dirX = 0; dirY = 1; }
         break;
@@ -587,22 +611,22 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY) {
         if (dirX != -1) { dirX = 1; dirY = 0; }
         break;
 
-
+        
     case 'c': case 'C':
         crece = 1;
         break;
 
-
+        
     case 'm': case 'M':
         showMap = !showMap;
         break;
 
-
+        
     case 'v':
         speed *= 1.1;
         break;
 
-
+        
     case 'V':
         speed *= 0.9;
         break;
@@ -611,7 +635,7 @@ void myKeyboard(unsigned char theKey, int mouseX, int mouseY) {
         showSplashScreen = false;
         break;
 
-
+        
     case 27: case 'e': case 'E':
         exit(-1);
     }
